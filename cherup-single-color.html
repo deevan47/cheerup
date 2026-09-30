@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CheerUp — Brand color</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --ink:#1c1a17; --ink-soft:#5c584f; --line:#e7e2d8; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #fdfcfa;
+    color: var(--ink);
+    font-family: 'Manrope', sans-serif;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 72px 32px 100px; }
+  .eyebrow { font-size: 13px; color: var(--ink-soft); margin-bottom: 10px; }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 34px;
+    margin: 0 0 14px;
+  }
+  .sub { font-size: 15px; color: var(--ink-soft); max-width: 480px; margin: 0 0 48px; }
+
+  .hero {
+    background: #A8461E;
+    border-radius: 14px;
+    padding: 56px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 12px;
+  }
+  .hero-left img { width: 64px; height: 64px; filter: brightness(0) invert(1); }
+  .hero-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 22px;
+    color: #fff;
+    margin: 16px 0 4px;
+  }
+  .hero-hex {
+    font-family: monospace;
+    font-size: 14px;
+    color: #f6dccb;
+  }
+  .hero-right {
+    text-align: right;
+    color: #fbe4d4;
+    font-size: 14px;
+    max-width: 220px;
+  }
+
+  .why {
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin: 24px 0 56px;
+    line-height: 1.7;
+  }
+  .why b { color: var(--ink); }
+
+  h2.section {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 16px;
+    margin: 0 0 16px;
+  }
+
+  .ramp { display: flex; border-radius: 10px; overflow: hidden; margin-bottom: 48px; }
+  .ramp div {
+    flex: 1;
+    height: 80px;
+    display: flex;
+    align-items: flex-end;
+    padding: 10px;
+    font-size: 12px;
+    font-family: monospace;
+  }
+
+  .avoid {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .avoid span {
+    font-size: 12px;
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    padding: 5px 12px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">CheerUp — one brand color</div>
+  <h1>Burnt Sienna</h1>
+  <p class="sub">One confident color instead of a competing pair — simpler to apply everywhere, and nothing else in the Indian gifting or delivery space is sitting here on the color wheel.</p>
+
+  <div class="hero">
+    <div class="hero-left">
+      <img src="cherup-logo-original.png" alt="logo">
+      <div class="hero-name">CheerUp</div>
+      <div class="hero-hex">#A8461E</div>
+    </div>
+    <div class="hero-right">Something to cheer about.</div>
+  </div>
+
+  <p class="why">
+    On the color wheel, this sits between red and orange, pulled down toward brown — warmer and more earthy than a pure orange, less aggressive than a pure red. <b>McDonald's and Zomato sit in bright red. Swiggy sits in bright, saturated orange. Rapido is yellow and black. CRED is black and gold.</b> Burnt sienna is muted and warm rather than loud and saturated, so it reads as personal and handmade instead of "delivery app" — which fits a gifting brand better than a bright primary would.
+  </p>
+
+  <h2 class="section">One color, four weights — nothing else needed</h2>
+  <div class="ramp">
+    <div style="background:#F3DCCC; color:#5c3319;">Tint 90</div>
+    <div style="background:#DE8A57; color:#3d1c0a;">Tint 60</div>
+    <div style="background:#A8461E; color:#fff;">Base</div>
+    <div style="background:#6E2B10; color:#fff;">Shade 40</div>
+    <div style="background:#3F1809; color:#fff;">Shade 20</div>
+  </div>
+
+</div>
+</body>
+</html>
