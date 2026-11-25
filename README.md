@@ -296,3 +296,4 @@ Add a line here every time something changes.
   - The `gh-pages` branch is deleted and `main` is the repo's default branch, so GitHub opens on the source files.
   - **To do:** in Google Search Console add `cheerup.in`, submit `https://cheerup.in/sitemap.xml`, and use "Request indexing" on the home page.
 # cheerup
+# cheerup
