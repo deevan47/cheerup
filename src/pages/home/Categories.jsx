@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { CATS, fromPrice, imageFor } from '../../data/products';
-import { href } from '../../routes';
+import { SHELF_ORDER, catNo, fromPrice, imageFor } from '../../data/products';
+import { href, catHref } from '../../routes';
 import { price } from '../../lib/money';
 import ImageSlot from '../../components/ImageSlot';
 
@@ -58,14 +58,14 @@ export default function Categories() {
       </div>
 
       <ul className="shelf" ref={shelf}>
-        {CATS.map((c, n) => {
+        {SHELF_ORDER.map((c) => {
           const from = fromPrice(c);
           return (
             <li key={c.id} className="shelf__item">
-              <a className="tile" href={`${href('products')}#${c.id}`}>
+              <a className="tile" href={catHref(c.id)}>
                 {/* until there is a photo, the tile shows the gift's one line, like a note card */}
                 <ImageSlot image={imageFor(c)} sizes="240px">
-                  <span className="slot__no" aria-hidden="true">{String(n + 1).padStart(2, '0')}</span>
+                  <span className="slot__no" aria-hidden="true">{catNo(c)}</span>
                   <p className="slot__line">{c.line}</p>
                 </ImageSlot>
                 <span className="tile__name">{c.name}</span>

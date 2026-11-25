@@ -4,7 +4,7 @@
 //   - the browser, via applyHead() on every page change
 //   - scripts/prerender.mjs, via headTags() to write the same tags into the static HTML
 // Keep it pure: headTags() must not touch the DOM.
-import { CATS, imageFor, lowestPrice } from '../data/products';
+import { CATS, catPath, imageFor, lowestPrice } from '../data/products';
 import { ROUTES } from '../routes';
 import { SITE } from '../data/site';
 
@@ -57,8 +57,8 @@ function websiteJsonLd() {
  * listing on their own as soon as a price is set in data/products.js. Same for
  * the image: included only once a real photo has been added.
  */
-function productsJsonLd() {
-  return CATS.flatMap((c) =>
+function productsJsonLd(cats = CATS) {
+  return cats.flatMap((c) =>
     c.options
       .filter((o) => o.price != null)
       .map((o) => {
@@ -77,7 +77,7 @@ function productsJsonLd() {
             priceCurrency: 'INR',
             availability: 'https://schema.org/InStock',
             areaServed: SITE.city,
-            url: `${ORIGIN}/gifts/#${c.id}`,
+            url: `${ORIGIN}${catPath(c)}/`,
           },
         };
       }),
@@ -96,6 +96,20 @@ export function headTags(key) {
   const jsonLd = [localBusinessJsonLd()];
   if (key === 'home') jsonLd.unshift(websiteJsonLd());
   if (key === 'products') jsonLd.push(...productsJsonLd());
+  const gift = key.startsWith('gift-') && CATS.find((c) => `gift-${c.id}` === key);
+  if (gift) {
+    jsonLd.push(...productsJsonLd([gift]));
+    // "Cheer Up > Gifts > Mugs" under the result, instead of the bare URL
+    jsonLd.push({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Cheer Up', item: `${ORIGIN}/` },
+        { '@type': 'ListItem', position: 2, name: 'Gifts', item: `${ORIGIN}/gifts/` },
+        { '@type': 'ListItem', position: 3, name: gift.name, item: url },
+      ],
+    });
+  }
   return {
     title: r.title,
     canonical: url,

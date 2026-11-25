@@ -298,3 +298,12 @@ Add a line here every time something changes.
 # cheerup
 # cheerup
 # cheerup
+
+- **2026-11-25 (Gifts, one page per kind)** The Gifts page was one long page of thirteen cards that all looked the same. Now:
+  - `/gifts` is an index, read like the contents page of a printed catalogue: four numbered chapters, one ruled row per gift with its catalogue number, its own drawing (`src/components/CatIcon.jsx`), its line and its price. Brand colours only: gifts are told apart by number, drawing and name. The row you point at turns sand and its drawing, name and arrow turn brand orange. Each row has a 4:5 photo space that shows the gift's drawing until its category photo is switched on. Reading text on both Gifts pages is 18px or larger, in the dark ink colour, with names in large serif.
+  - A search box finds gifts by everyday words ("cup", "cushion", "mobile cover", "12 inch") and names the matching style on the row. "Who's it for?" chips show the three picks for that person, with their line from `src/data/people.js`.
+  - Every kind of gift has its own page: `/gifts/mugs`, `/gifts/photo-frames`, `/gifts/fridge-magnets` and so on (`src/pages/products/CategoryPage.jsx`). Each page shows the gift's catalogue number, then each style as its own card with its own price and buttons, with "All gifts" at the top and the previous and next gift at the bottom. Each page has its own Google title ("Personalised mugs in Pune"), its products and a breadcrumb for search results, and is in the sitemap.
+  - In `src/data/products.js`: `GROUPS` lists the chapters; every category has `group` and `tags` (extra search words, never shown). `SHELF_ORDER` is the catalogue in chapter order, and every gift number on the site (Home shelf, Gifts index, a gift's page: "No. 05 of 13") counts in that order. The page URL comes from the category name, so renaming a category changes its URL.
+  - Search and person are kept in the address (`/gifts/?for=dad&q=mug`) so a filtered page can be shared. The Home "Who's on your mind" panel now ends with "See every gift for Mum" (or whoever is picked), and its "See all mugs" links go to the gift's own page.
+- **Adding product photos:** every product in `src/data/products.js` now has its photo line already written and commented out, right under `image: null`, with the file address and the name, e.g. `// image: 'photos/mugs-classic.jpg', alt: 'Classic mug',`. Save the photo under that name in `public/photos/`, swap the two lines, and run `npm run images`. The steps are at the top of `products.js`.
+

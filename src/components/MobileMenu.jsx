@@ -18,7 +18,7 @@ export default function MobileMenu() {
     <div id="mobile-menu" className={`mobile-menu${menu ? ' is-open' : ''}`}>
       <nav aria-label="Mobile">
         {NAV.map((r) => (
-          <a key={r.key} href={r.path} className={page === r.key ? 'is-active' : undefined} aria-current={page === r.key ? 'page' : undefined} onClick={() => setMenu(false)}>
+          <a key={r.key} href={r.path} className={here(page, r.key) ? 'is-active' : undefined} aria-current={here(page, r.key) ? 'page' : undefined} onClick={() => setMenu(false)}>
             {r.label}
           </a>
         ))}
@@ -28,3 +28,6 @@ export default function MobileMenu() {
     </div>
   );
 }
+
+// A gift's own page (/gifts/mugs) counts as being on Gifts.
+const here = (page, key) => page === key || (key === 'products' && page.startsWith('gift-'));

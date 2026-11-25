@@ -1,35 +1,216 @@
-/* THE GIFTS PAGE. See Products.jsx for the order of things. */
-.products { max-width: var(--max); margin: 0 auto; padding: var(--s5) var(--gutter) var(--s10); }
+/* THE GIFTS PAGES: the index (Products.jsx) and one page per kind of gift
+   (CategoryPage.jsx). Brand colours only; the gifts are told apart by number,
+   drawing and name, not by colour. */
+.products, .cat-page { max-width: var(--max); margin: 0 auto; padding: var(--s5) var(--gutter) var(--s10); }
 .products__head .h-page { max-width: 22ch; }
 .products__head .lead { max-width: 60ch; }
 
-/* ---------- the sticky jump row ----------
-   Sits under the header, scrolls sideways when the thirteen chips do not fit,
-   and hides its scrollbar: the chips running off the edge already say "more". */
-.cat-jump {
-  position: sticky; top: var(--hdr); z-index: 20;
-  display: flex; gap: var(--s2); overflow-x: auto; scroll-snap-type: x proximity;
-  scrollbar-width: none; -webkit-overflow-scrolling: touch;
-  margin: var(--s5) calc(var(--gutter) * -1) 0; padding: var(--s3) var(--gutter);
-  background: var(--cream); border-bottom: 1px solid var(--line);
+/* ---------- the finder ----------
+   Search and "Who's it for?" on one sand panel, with the count underneath. */
+.finder {
+  margin-top: var(--s6); padding: var(--s5); background: var(--sand); border-radius: var(--r);
+  display: grid; gap: var(--s5);
 }
-.cat-jump::-webkit-scrollbar { display: none; }
-.cat-jump .chip { flex: 0 0 auto; scroll-snap-align: center; text-decoration: none; white-space: nowrap; }
-@media (max-width: 1099px) { .cat-jump { top: 64px; } }
+.finder__label {
+  display: block; padding: 0; margin: 0 0 var(--s3);
+  font-size: var(--fs-sm); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink);
+}
+.finder__box { position: relative; max-width: 560px; }
+.finder__icon {
+  position: absolute; left: var(--s4); top: 50%; transform: translateY(-50%);
+  width: 22px; height: 22px; color: var(--dark); pointer-events: none;
+}
+.finder__box input {
+  width: 100%; min-height: 60px; padding: 14px var(--s4) 14px 52px;
+  font: 400 var(--fs-body)/1.4 var(--sans); color: var(--ink);
+  background: var(--cream); border: 1.5px solid var(--dark); border-radius: var(--r);
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.finder__box input::placeholder { color: var(--muted); opacity: 1; }
+.finder__box input:focus { outline: none; border-color: var(--ink); box-shadow: 0 0 0 3px var(--brand); }
 
-/* ---------- the grid of cards ----------
-   Three across on desktop, two on a tablet, one on a phone. auto-fill rather
-   than auto-fit, so a short last row keeps its card width instead of
-   stretching one card across the page. */
-.gifts {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
-  gap: var(--s8) var(--s6); margin-top: var(--s7);
+.finder__who { border: 0; margin: 0; padding: 0; min-width: 0; }
+.finder__chips { display: flex; flex-wrap: wrap; gap: var(--s2); }
+.finder__chips .chip { background: var(--cream); }
+.finder__chips .chip:hover { border-color: var(--brand); color: var(--brand); }
+.finder__chips .chip[aria-pressed='true'] { background: var(--brand); border-color: var(--brand); color: var(--cream); }
+.finder__chips .chip[aria-pressed='true']:hover { background: var(--ink); border-color: var(--ink); color: var(--cream); }
+
+.finder__count {
+  margin: 0; padding-top: var(--s4); border-top: 1px solid var(--line);
+  font-family: var(--serif); font-size: var(--fs-h3); line-height: 1.2; color: var(--ink);
+}
+.finder__clear {
+  margin-left: var(--s3); padding: 10px 0; background: none; border: 0; cursor: pointer;
+  font: 700 var(--fs-sm)/1 var(--sans); color: var(--dark);
+  text-decoration: underline; text-underline-offset: 5px; text-decoration-color: var(--brand);
+}
+.finder__clear:hover { color: var(--brand); }
+
+@media (min-width: 1100px) {
+  .finder { grid-template-columns: minmax(300px, 1fr) auto; align-items: end; gap: var(--s5) var(--s6); }
+  .finder__box { max-width: none; }
+  .finder__count { grid-column: 1 / -1; }
 }
 
-/* ---------- one card ---------- */
-.gift { display: flex; flex-direction: column; min-width: 0; scroll-margin-top: calc(var(--hdr) + 80px); }
-.gift .slot { transition: transform .4s var(--ease); }
-.gift:hover .slot { transform: translateY(-4px); }
+/* nothing matched */
+.finder__none { margin-top: var(--s7); padding: var(--s7) 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.finder__none p { margin: 0 0 var(--s2); font-size: var(--fs-body); }
+.finder__none .finder__none-line { font-family: var(--serif); font-size: var(--fs-h3); line-height: 1.2; overflow-wrap: anywhere; }
+.finder__none-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3) var(--s5); margin-top: var(--s5); }
+.finder__none-actions .tlink { background: none; border: 0; cursor: pointer; font: inherit; color: var(--ink); }
+
+/* ---------- the index ----------
+   Read like the contents page of a printed catalogue: a numbered chapter, then
+   one ruled row per gift, each row the full width of the page so names and
+   lines never have to squeeze. Colour is held back for the one
+   thing that matters: the row you are pointing at turns sand, and its drawing,
+   name and arrow turn brand orange. */
+.chapter { margin-top: var(--s9); }
+.chapter__head {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: baseline;
+  gap: var(--s2) var(--s5); padding-bottom: var(--s5);
+}
+.chapter__head .chapter__line { grid-column: 2; }
+.chapter__no {
+  margin: 0; min-width: 2ch; font-family: var(--serif); font-size: clamp(32px, 2vw + 22px, 50px); line-height: 1.05;
+  color: var(--brand);
+}
+.chapter__name { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(32px, 2vw + 22px, 50px); line-height: 1.05; }
+.chapter__line { margin: 0; font-size: var(--fs-lead); line-height: 1.5; color: var(--ink); max-width: 48ch; }
+
+.index { list-style: none; margin: 0; padding: 0; border-top: 1.5px solid var(--ink); }
+.index--found { margin-top: var(--s7); }
+.index__item { border-bottom: 1px solid var(--rule); scroll-margin-top: calc(var(--hdr) + var(--s6)); }
+
+.row {
+  display: grid; grid-template-columns: 2.75rem 112px minmax(0, 1fr) auto 32px; align-items: center;
+  gap: var(--s6); padding: var(--s6) var(--s4); margin: 0 calc(var(--s4) * -1);
+  color: var(--ink); text-decoration: none; border-radius: var(--r);
+  transition: background-color .25s ease;
+}
+.row__no {
+  align-self: start; padding-top: var(--s2);
+  font-size: var(--fs-sm); font-weight: 700; letter-spacing: .06em; font-variant-numeric: tabular-nums; color: var(--dark);
+}
+/* the photo space: the category's photo once there is one, its drawing until then */
+.row__art { width: 112px; color: var(--ink); transition: color .25s ease, transform .4s var(--ease); }
+.row__art .slot__note { justify-content: center; align-items: center; padding: var(--s2); }
+.row__art .cat-icon { width: 88%; }
+.row__art .cat-icon * { vector-effect: non-scaling-stroke; stroke-width: 2px; }
+.row__main { display: flex; flex-direction: column; min-width: 0; }
+.row__name { font-family: var(--serif); font-size: clamp(30px, 1.5vw + 22px, 44px); line-height: 1.05; transition: color .25s ease; }
+.row__line { margin-top: var(--s3); font-size: var(--fs-lead); line-height: 1.5; color: var(--ink); max-width: 46ch; }
+.row__for { font-weight: 700; }
+.row__found { margin-top: var(--s3); font-size: var(--fs-body); }
+.row__meta {
+  display: flex; flex-direction: column; align-items: flex-end; gap: var(--s1); text-align: right; white-space: nowrap;
+  font-size: var(--fs-body); color: var(--dark);
+}
+.row__price { font-size: var(--fs-lead); font-weight: 700; color: var(--ink); }
+.row__go { width: 32px; height: 32px; color: var(--ink); transition: transform .3s var(--ease), color .25s ease; }
+.row__go svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+.row:hover, .row:focus-visible { background: var(--sand); }
+.row:hover .row__art, .row:focus-visible .row__art { color: var(--brand); transform: translateY(-4px); }
+.row:hover .row__name, .row:focus-visible .row__name { color: var(--brand); }
+.row:hover .row__go, .row:focus-visible .row__go { color: var(--brand); transform: translateX(6px); }
+.row:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+
+
+/* phones: number and drawing stacked in the left column, price under the line */
+@media (max-width: 699px) {
+  .row {
+    grid-template-columns: 88px minmax(0, 1fr) 24px; grid-template-areas: 'art main go' 'art meta go';
+    gap: var(--s2) var(--s4); padding: var(--s5) var(--s3); margin: 0 calc(var(--s3) * -1);
+  }
+  .row__no { display: none; }
+  .row__art { grid-area: art; align-self: start; width: 88px; }
+  .row__art .slot__note { padding: var(--s2); }
+  .row__main { grid-area: main; }
+  .row__name { font-size: 28px; }
+  .row__line { font-size: var(--fs-body); margin-top: var(--s2); }
+  .row__meta { grid-area: meta; flex-direction: row; flex-wrap: wrap; gap: 0 var(--s2); align-items: baseline; text-align: left; white-space: normal; }
+  .row__meta > span:first-child::after { content: ' ·'; }
+  .row__price { font-size: var(--fs-body); }
+  .row__go { grid-area: go; width: 24px; height: 24px; }
+}
+
+/* ---------- a gift's own page ---------- */
+.crumbs { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s3); align-items: center; font-size: var(--fs-body); color: var(--ink); }
+.crumbs a { color: var(--ink); font-weight: 700; text-decoration: underline; text-underline-offset: 5px; text-decoration-color: var(--brand); padding: 10px 0; }
+.crumbs a:hover { color: var(--brand); }
+
+.cat-hero {
+  margin-top: var(--s4); padding: var(--s6) 0 var(--s7); border-top: 1.5px solid var(--ink); border-bottom: 1px solid var(--rule);
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--s7); align-items: center;
+}
+.cat-hero__no {
+  margin: 0 0 var(--s3); font-size: var(--fs-sm); font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  font-variant-numeric: tabular-nums; color: var(--brand);
+}
+.cat-hero__no span { color: var(--dark); }
+.cat-hero__name { margin: 0; }
+.cat-hero .lead { margin: var(--s4) 0 0; max-width: 46ch; color: var(--ink); }
+.cat-hero__meta { margin: var(--s5) 0 0; font-size: var(--fs-body); font-weight: 700; color: var(--dark); }
+.cat-hero__art {
+  width: clamp(120px, 14vw, 190px); aspect-ratio: 1; padding: clamp(26px, 3vw, 40px);
+  border-radius: 50%; background: var(--sand); color: var(--brand);
+}
+@media (max-width: 699px) {
+  .cat-hero { grid-template-columns: 1fr; gap: var(--s5); }
+  .cat-hero__art { order: -1; width: 96px; padding: 20px; }
+}
+
+/* the styles, one card each */
+.opts {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: var(--s8) var(--s6); margin-top: var(--s8);
+}
+.opt { display: flex; flex-direction: column; min-width: 0; scroll-margin-top: calc(var(--hdr) + var(--s6)); }
+.opt:target .slot { box-shadow: 0 0 0 4px var(--brand); }
+.opt .slot { transition: transform .4s var(--ease); }
+.opt:hover .slot { transform: translateY(-4px); }
+.opt .slot__note { padding: var(--s5); justify-content: center; align-items: center; }
+.opt .opt__icon { width: 40%; color: var(--ink); }
+.opt .opt__icon * { vector-effect: non-scaling-stroke; stroke-width: 2.5px; }
+.opt__body { display: flex; flex-direction: column; flex: 1; padding-top: var(--s5); }
+.opt__name { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(26px, 1vw + 21px, 34px); line-height: 1.1; }
+.opt__desc { margin: var(--s3) 0 0; font-size: var(--fs-lead); line-height: var(--lh-lead); color: var(--ink); flex: 1; }
+
+/* one style only, or the frame slider: picture and words side by side */
+@media (min-width: 800px) {
+  .opts--wide { grid-template-columns: 1fr; }
+  .opts--wide .opt, .opts--wide .gift { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: var(--s8); align-items: center; }
+  .opts--wide .slot { max-width: 440px; }
+  .opts--wide .opt__body, .opts--wide .gift__body { padding-top: 0; }
+}
+
+/* "Not sure which?" */
+.cat-ask {
+  margin-top: var(--section-y); background: var(--sand); border-radius: var(--r); padding: var(--s6);
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--s5) var(--s6);
+}
+.cat-ask p { margin: 0; font-family: var(--serif); font-size: var(--fs-h3); line-height: 1.15; max-width: 28ch; }
+
+/* previous, all, next */
+.cat-pager { display: grid; grid-template-columns: 1fr auto 1fr; gap: var(--s4); align-items: stretch; margin-top: var(--s7); }
+.cat-pager__link {
+  display: flex; flex-direction: column; gap: var(--s1); padding: var(--s4) 0;
+  border-top: 1.5px solid var(--ink); color: var(--ink); text-decoration: none;
+}
+.cat-pager__link:hover .cat-pager__name { color: var(--brand); }
+.cat-pager__link--next { text-align: right; }
+.cat-pager__dir { font-size: var(--fs-sm); font-weight: 700; letter-spacing: .1em; font-variant-numeric: tabular-nums; color: var(--dark); }
+.cat-pager__name { font-family: var(--serif); font-size: clamp(24px, 1vw + 19px, 32px); line-height: 1.15; transition: color .2s ease; }
+.cat-pager__all { align-self: center; font-size: var(--fs-body); }
+@media (max-width: 599px) {
+  .cat-pager { grid-template-columns: 1fr 1fr; }
+  .cat-pager__all { grid-column: 1 / -1; grid-row: 2; justify-self: center; }
+}
+
+/* ---------- the photo-frame card (GiftCard.jsx) ---------- */
+.gift { display: flex; flex-direction: column; min-width: 0; }
 .gift__body { display: flex; flex-direction: column; flex: 1; padding-top: var(--s5); }
 .gift__name { margin: 0; font-family: var(--serif); font-weight: 400; font-size: var(--fs-h3); line-height: 1.15; }
 .gift__line { margin: var(--s2) 0 0; font-size: var(--fs-body); line-height: var(--lh-lead); }
@@ -46,12 +227,12 @@
 /* the detail fades in fresh each time the option changes (it is re-keyed) */
 .gift__detail { margin-top: var(--s4); animation: gift-in .35s var(--ease) both; flex: 1; display: flex; flex-direction: column; }
 @keyframes gift-in { from { opacity: 0; transform: translateY(4px); } }
-.gift__desc { margin: 0; font-size: var(--fs-body); line-height: var(--lh-lead); color: var(--muted); flex: 1; }
-.gift__price { margin: var(--s3) 0 0; font-size: 20px; font-weight: 700; line-height: 1.2; color: var(--ink); }
-.gift__ask { font-size: var(--fs-sm); color: var(--muted); }
+.gift__desc { margin: 0; font-size: var(--fs-lead); line-height: var(--lh-lead); color: var(--ink); flex: 1; }
+.gift__price { margin: var(--s4) 0 0; font-size: 24px; font-weight: 700; line-height: 1.2; color: var(--ink); }
+.gift__ask { font-size: var(--fs-body); color: var(--dark); }
 
 .gift__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3) var(--s5); margin-top: var(--s4); }
-.gift__q { font-size: var(--fs-sm); text-underline-offset: 6px; }
+.gift__q { font-size: var(--fs-body); text-underline-offset: 6px; }
 
 /* ---------- the frame-size slider ---------- */
 .gift__size { margin-top: var(--s5); }
@@ -60,7 +241,7 @@
 .gift__size-val { font-size: var(--fs-h3); font-family: var(--serif); line-height: 1; color: var(--ink); }
 .gift__ticks { display: flex; justify-content: space-between; margin-top: var(--s1); font-size: var(--fs-xs); color: var(--muted); }
 
-/* ---------- the closing panel ---------- */
+/* ---------- the closing panel (overview) ---------- */
 .products__foot { padding-top: var(--section-y); }
 .products__help {
   background: var(--sand); border-radius: var(--r); padding: var(--s6);

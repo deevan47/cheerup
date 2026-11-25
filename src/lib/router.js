@@ -79,7 +79,7 @@ export function interceptLinks(onNavigate) {
     e.preventDefault();
     // title first: Google Analytics records the page view at the moment of pushState
     document.title = findRoute(key).title;
-    window.history.pushState(null, '', url.pathname + url.hash);
+    window.history.pushState(null, '', url.pathname + url.search + url.hash);
     onNavigate(key, url.hash);
   };
   document.addEventListener('click', handler);

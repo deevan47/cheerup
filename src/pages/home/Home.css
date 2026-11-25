@@ -70,6 +70,7 @@
 #who-panel:focus { outline: none; }
 
 .lucky__ideas { display: flex; flex-direction: column; }
+.lucky__all { align-self: flex-start; margin-top: var(--s4); font-size: var(--fs-sm); }
 .idea {
   display: grid; grid-template-columns: 72px minmax(0, 1fr) auto; gap: var(--s3) var(--s5);
   align-items: center; padding: var(--s5) 0; border-bottom: 1px solid var(--rule);

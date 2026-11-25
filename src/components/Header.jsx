@@ -26,7 +26,7 @@ export default function Header() {
         </a>
         <nav aria-label="Main" className="site-nav">
           {NAV.map((r) => (
-            <a key={r.key} href={r.path} className={page === r.key ? 'is-active' : undefined} aria-current={page === r.key ? 'page' : undefined}>
+            <a key={r.key} href={r.path} className={here(page, r.key) ? 'is-active' : undefined} aria-current={here(page, r.key) ? 'page' : undefined}>
               {r.label}
             </a>
           ))}
@@ -45,3 +45,6 @@ export default function Header() {
     </header>
   );
 }
+
+// A gift's own page (/gifts/mugs) counts as being on Gifts.
+const here = (page, key) => page === key || (key === 'products' && page.startsWith('gift-'));

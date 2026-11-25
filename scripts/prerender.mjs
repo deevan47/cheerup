@@ -63,7 +63,7 @@ const listed = ROUTES.filter((r) => r.group !== 'extra');
 const loc = (r) => `${ORIGIN}${r.path === '/' ? '/' : `${r.path}/`}`;
 writeFileSync(join(DIST, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${listed.map((r) => `  <url><loc>${loc(r)}</loc><lastmod>${today}</lastmod><priority>${r.path === '/' ? '1.0' : r.group === 'main' ? '0.8' : '0.3'}</priority></url>`).join('\n')}
+${listed.map((r) => `  <url><loc>${loc(r)}</loc><lastmod>${today}</lastmod><priority>${r.path === '/' ? '1.0' : r.group === 'main' ? '0.8' : r.group === 'gift' ? '0.7' : '0.3'}</priority></url>`).join('\n')}
 </urlset>
 `);
 writeFileSync(join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${ORIGIN}/sitemap.xml\n`);

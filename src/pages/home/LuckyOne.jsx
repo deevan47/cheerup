@@ -4,7 +4,7 @@ import { PEOPLE } from '../../data/people';
 import { findCatByName, imageFor } from '../../data/products';
 import { wa, MSG } from '../../lib/whatsapp';
 import { rise } from '../../lib/motion';
-import { href } from '../../routes';
+import { href, catHref } from '../../routes';
 import useUpdateEffect from '../../hooks/useUpdateEffect';
 import WaLink from '../../components/WaLink';
 import Photo from '../../components/Photo';
@@ -88,13 +88,16 @@ export default function LuckyOne() {
                       <WaLink className="btn btn--primary btn--sm" href={wa(MSG.idea(person.k, cat, line))}>
                         Order this on WhatsApp
                       </WaLink>
-                      <a className="tlink tap idea__more" href={`${href('products')}#${c.id}`}>
+                      <a className="tlink tap idea__more" href={catHref(c.id)}>
                         See all {cat.toLowerCase()}
                       </a>
                     </div>
                   </div>
                   );
                 })}
+                <a className="tlink tap lucky__all" href={`${href('products')}?for=${person.k.toLowerCase().replace(/\s+/g, '-')}`}>
+                  See every gift for {person.k}
+                </a>
               </div>
             )}
 

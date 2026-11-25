@@ -23,8 +23,12 @@ import ImageSlot from '../../components/ImageSlot';
  *
  * Changing the option re-keys the detail block, so its text fades in afresh
  * (.gift__detail in Products.css) instead of snapping.
+ *
+ * Used on a gift's own page (CategoryPage.jsx) for Photo frames, where ten sizes
+ * are one card with a slider. `bare` leaves out the name and line, because the
+ * page header above already says them.
  */
-export default function GiftCard({ cat, no, first = false }) {
+export default function GiftCard({ cat, no, first = false, bare = false }) {
   const { setSheet, sheetOpener } = useApp();
   // Frames open on 12 in (the middle of the range); everything else on its first option.
   const startAt = cat.control === 'slider' ? Math.max(0, cat.options.findIndex((o) => o.size === 12)) : 0;
@@ -46,7 +50,7 @@ export default function GiftCard({ cat, no, first = false }) {
         sizes="(max-width: 700px) 92vw, (max-width: 1099px) 46vw, 380px"
       >
         {/* Shown only until this gift has a photo: the choice, drawn. */}
-        <span className="slot__no" aria-hidden="true">{String(no).padStart(2, '0')}</span>
+        {!bare && <span className="slot__no" aria-hidden="true">{String(no).padStart(2, '0')}</span>}
         {cat.control === 'slider'
           ? <FrameScale size={opt.size} max={cat.options[cat.options.length - 1].size} />
           : SHAPES[opt.id] && cat.pick === 'Shape' && <ShapeMark key={opt.id} shape={opt.id} />}
@@ -54,8 +58,8 @@ export default function GiftCard({ cat, no, first = false }) {
       </ImageSlot>
 
       <div className="gift__body">
-        <h2 className="gift__name" id={`${cat.id}-name`}>{cat.name}</h2>
-        <p className="gift__line">{cat.line}</p>
+        <h2 className={bare ? 'sr-only' : 'gift__name'} id={`${cat.id}-name`}>{cat.name}</h2>
+        {!bare && <p className="gift__line">{cat.line}</p>}
 
         {many && cat.control === 'slider' && (
           <SizeSlider cat={cat} index={i} onChange={setI} />
@@ -93,7 +97,7 @@ export default function GiftCard({ cat, no, first = false }) {
         </div>
 
         <div className="gift__actions">
-          <button className="btn btn--primary btn--sm" onClick={personalise}>Personalise this</button>
+          <button className="btn btn--primary" onClick={personalise}>Personalise this</button>
           <WaTextLink className="tlink tap gift__q" href={wa(MSG.question(opt.n, cat.name))}>Ask about this</WaTextLink>
         </div>
       </div>
@@ -163,13 +167,13 @@ function FrameScale({ size, max }) {
 }
 
 // Outline paths in a 100x100 box, for the Shape choices that have a simple shape.
-const SHAPES = {
+export const SHAPES = {
   heart: 'M50 86 C22 66 8 50 8 33 C8 20 18 11 30 11 C39 11 46 16 50 24 C54 16 61 11 70 11 C82 11 92 20 92 33 C92 50 78 66 50 86 Z',
   square: 'M14 14 H86 V86 H14 Z',
   circle: 'M50 10 A40 40 0 1 1 49.9 10 Z',
 };
 
-function ShapeMark({ shape }) {
+export function ShapeMark({ shape }) {
   return (
     <svg className="shape-viz" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
       <path d={SHAPES[shape]} />

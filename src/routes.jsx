@@ -3,6 +3,7 @@
 //   group 'main'   -> shows in the header nav + footer "Pages" list (and mobile menu)
 //   group 'policy' -> shows in the footer "Policies" list and the policy pages
 //   group 'extra'  -> a real page with its own URL, but not in the nav
+//   group 'gift'   -> one page per kind of gift, made from data/products.js (see below)
 //   path           -> the real, crawlable URL (see lib/router.js). Change it and old
 //                     links break, so add a redirect in LEGACY_PATHS if you do.
 import Home from './pages/home/Home';
@@ -17,6 +18,8 @@ import Refund from './pages/policies/Refund';
 import Shipping from './pages/policies/Shipping';
 import Privacy from './pages/policies/Privacy';
 import Terms from './pages/policies/Terms';
+import CategoryPage from './pages/products/CategoryPage';
+import { CATS, catPath, findCat } from './data/products';
 
 // `title` and `description` go in the <head> per page (see lib/head.js).
 // Keep descriptions at 155 characters or fewer.
@@ -82,6 +85,18 @@ export const ROUTES = [
     title: 'Terms of service | Cheer Up',
     description: 'The terms you order under: a free preview first, 70% on approval, 30% on delivery, all confirmed over WhatsApp.',
   },
+  // One page per kind of gift, in catalogue order. Add a category to
+  // data/products.js and its page appears here, in the sitemap and in the build.
+  ...CATS.map((c) => {
+    const n = c.options.length;
+    const Page = () => <CategoryPage cat={c} />;
+    Page.displayName = `Gift(${c.id})`;
+    return {
+      key: `gift-${c.id}`, label: c.name, group: 'gift', path: catPath(c), Page,
+      title: `Personalised ${c.name.toLowerCase()} in Pune | Cheer Up`,
+      description: `${c.line} ${n} ${n === 1 ? 'style' : c.control === 'slider' ? 'sizes' : 'styles'}, made with your photo or words and delivered across Pune in 24 hours.`,
+    };
+  }),
 ];
 
 export const NAV = ROUTES.filter((r) => r.group === 'main');
@@ -91,3 +106,5 @@ export const DEFAULT_PAGE = 'home';
 export const findRoute = (key) => ROUTES.find((r) => r.key === key) || ROUTES[0];
 /** The URL for a page key: href('products') -> '/gifts'. Use this for every internal link. */
 export const href = (key) => findRoute(key).path;
+/** The URL for a kind of gift's own page: catHref('frames') -> '/gifts/photo-frames'. */
+export const catHref = (id) => catPath(findCat(id));

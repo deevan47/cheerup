@@ -224,10 +224,47 @@ card on the Gifts page. Tile names and "From ₹…" prices come from the catalo
 
 ---
 
-## 3. Gifts page (`src/pages/products/Products.jsx` and `GiftCard.jsx`, data `src/data/products.js`)
+## 3. Gifts pages (`src/pages/products/Products.jsx`, `CategoryPage.jsx`, `GiftCard.jsx`, data `src/data/products.js`)
 
-One card per category. Inside each card the visitor picks a style, shape or size;
-the description and the price under it change with the choice.
+`/gifts` is an index, like the contents page of a printed catalogue: a finder,
+then four numbered chapters with one ruled row per gift (number, drawing, name,
+line, price). Brand colours only. Each row opens that
+gift's own page (`/gifts/mugs`, `/gifts/photo-frames`, ...), where every style is
+its own card with its own price. Photo frames keep one card with a size slider.
+
+Finder and chapters (index):
+
+| # | Role | Current text | New text |
+|---|---|---|---|
+| 3.0a | Search label | Search |  |
+| 3.0b | Search hint | Try mug, cushion, heart… |  |
+| 3.0c | Person label | Who’s it for? |  |
+| 3.0d | Person chips | Anyone / Mum / Dad / Partner / Best friend / Sibling / Colleague / Teacher (from `src/data/people.js`) |  |
+| 3.0e | Count, nothing picked | 13 kinds of gift, in four chapters |  |
+| 3.0f | Count, searching | 4 kinds of gift matching “heart” |  |
+| 3.0g | Count, person picked | My three favourites for Dad |  |
+| 3.0h | Clear link | Show all gifts |  |
+| 3.0i | Nothing found, heading | Nothing called “…” yet. |  |
+| 3.0j | Nothing found, line | Tell me what you have in mind and I’ll make it. |  |
+| 3.0k | Nothing found, BTN / LINK | Ask on WhatsApp / See every gift |  |
+| 3.0l | Chapter I | **Everyday things they’ll use** Seen and held every day, so you are too. |  |
+| 3.0m | Chapter II | **Photos & frames** For the pictures that deserve better than a phone screen. |  |
+| 3.0n | Chapter III | **To hug and to wear** Soft things, made to be kept close. |  |
+| 3.0o | Chapter IV | **Gifts that tell a story** Something to open, page through, and keep. |  |
+| 3.0p | Row, person picked | **For Dad.** (then the line from `people.js`) |  |
+| 3.0q | Row, search hit | Found: **Heart holder mug** |  |
+| 3.0r | Row, right side | 5 styles / from ₹269 (or price on request) |  |
+
+A gift's own page:
+
+| # | Role | Current text | New text |
+|---|---|---|---|
+| 3.0s | Breadcrumb | All gifts / (chapter name) |
+| 3.0s2 | Above the name | NO. 05 OF 13 |  |
+| 3.0t | Header line under the name | 5 styles · from ₹269 · free preview before you pay |  |
+| 3.0u | Help panel P | Not sure which one? Tell me who it’s for. I’ll help you pick. |  |
+| 3.0v | Help panel BTN | Ask about mugs |  |
+| 3.0w | Pager | ← 04 (gift) / All gifts / 06 → (gift) |  |
 
 Page frame:
 

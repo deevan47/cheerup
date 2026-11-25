@@ -1,6 +1,6 @@
 import { CATS, imageFor } from '../../data/products';
 import { priceWithUnit } from '../../lib/money';
-import { href } from '../../routes';
+import { href, catHref } from '../../routes';
 import ImageSlot from '../../components/ImageSlot';
 
 /**
@@ -26,7 +26,7 @@ export default function Showcase() {
   return (
     <section className="showcase" aria-label="A few of the gifts">
       {picks.map(({ cat, opt }, i) => (
-        <a key={`${cat.id}-${opt.id}`} className="shot" href={`${href('products')}#${cat.id}`}>
+        <a key={`${cat.id}-${opt.id}`} className="shot" href={catHref(cat.id)}>
           <ImageSlot image={imageFor(cat, opt)} eager={i === 0} sizes="(max-width: 900px) 24vw, 280px" />
           <span className="shot__name">{opt.n}</span>
           <span className="shot__price">
