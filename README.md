@@ -307,3 +307,4 @@ Add a line here every time something changes.
   - Search and person are kept in the address (`/gifts/?for=dad&q=mug`) so a filtered page can be shared. The Home "Who's on your mind" panel now ends with "See every gift for Mum" (or whoever is picked), and its "See all mugs" links go to the gift's own page.
 - **Adding product photos:** every product in `src/data/products.js` now has its photo line already written and commented out, right under `image: null`, with the file address and the name, e.g. `// image: 'photos/mugs-classic.jpg', alt: 'Classic mug',`. Save the photo under that name in `public/photos/`, swap the two lines, and run `npm run images`. The steps are at the top of `products.js`.
 
+- **Google Search Console:** `public/google9b70e667201dbe85.html` proves to Google that cheerup.in is yours. Never delete or rename it, or Search Console loses access.
