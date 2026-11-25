@@ -1,0 +1,36 @@
+.site-header {
+  position: sticky; top: 0; z-index: 30; background: var(--cream); border-bottom: 1px solid var(--line);
+}
+.site-header__inner {
+  max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); height: 64px;
+  display: flex; align-items: center; gap: var(--s4);
+}
+.site-header__logo { display: flex; color: var(--brand); flex: none; margin-right: auto; }
+.site-header__logo svg { height: 32px; width: auto; }
+
+/* Phone and tablet: the menu button only. */
+.site-nav, .site-header__cta { display: none; }
+.menu-toggle {
+  background: none; border: 0; padding: var(--s3) 0 var(--s3) var(--s2);
+  font-size: 17px; font-weight: 700; color: var(--ink); cursor: pointer;
+  min-width: 56px; min-height: 44px; text-align: right;
+}
+
+/* Desktop: six links and one button. */
+@media (min-width: 1100px) {
+  .site-header__inner { height: var(--hdr); gap: var(--s5); }
+  .site-header__logo svg { height: 34px; }
+  .site-nav { display: flex; gap: clamp(14px, 1.6vw, 24px); align-items: center; }
+  .site-header__cta { display: inline-flex; flex: none; }
+  .menu-toggle { display: none; }
+}
+
+.site-nav a {
+  /* 14px of padding top and bottom turns a 16px-tall line of text into a 44px target */
+  padding: 14px 0; font-size: var(--fs-sm); font-weight: 600; line-height: 1; white-space: nowrap;
+  color: var(--ink); text-decoration: underline; text-decoration-color: transparent;
+  text-decoration-thickness: 2px; text-underline-offset: 8px;
+  transition: color .2s ease, text-decoration-color .2s ease;
+}
+.site-nav a:hover { color: var(--brand); }
+.site-nav a.is-active { color: var(--brand); text-decoration-color: var(--brand); }

@@ -1,0 +1,14 @@
+.policy { max-width: var(--max); margin: 0 auto; padding: var(--s7) var(--gutter) var(--s10); }
+/* Aligned with the header logo and every other page. It used to be pushed
+   144-180px in from the left but not centred, so it lined up with nothing. */
+.policy__inner { max-width: 720px; margin-left: 0; }
+.policy h1 { margin: 0 0 var(--s6); font-family: var(--serif); font-weight: 400; font-size: var(--fs-h2); line-height: 1.04; }
+.policy__body { display: flex; flex-direction: column; gap: var(--s4); font-size: var(--fs-body); line-height: 1.7; }
+.policy__body p { margin: 0; }
+.policy__body a { text-underline-offset: 5px; }
+.policy__others {
+  margin-top: var(--s7); padding-top: var(--s5); border-top: 1px solid var(--line);
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0 var(--s5); font-size: var(--fs-sm);
+}
+.policy__others span { color: var(--muted); }
+.policy__others a { font-weight: 700; text-underline-offset: 5px; }

@@ -1,0 +1,31 @@
+.faq {
+  max-width: var(--max); margin: 0 auto; padding: var(--s7) var(--gutter) var(--s10);
+  display: grid; grid-template-columns: 1fr; gap: var(--s6);
+}
+/* Two real columns, and the list spans the whole grid. It used to be
+   `grid-column: span 2` inside an auto-fit grid, which at 375px pushed the list
+   20px past the content area and clipped the expand icon off the right edge. */
+@media (min-width: 900px) {
+  .faq { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--s6) var(--s8); align-items: start; }
+  .faq__intro { position: sticky; top: calc(var(--hdr) + var(--s5)); }
+}
+.faq__intro { min-width: 0; }
+.faq__intro h1 { max-width: 12ch; }
+.faq__intro p { margin: var(--s5) 0 0; max-width: 26ch; font-size: var(--fs-lead); line-height: var(--lh-lead); }
+.faq__list { grid-column: 1 / -1; min-width: 0; border-top: 1px solid var(--line); }
+@media (min-width: 900px) { .faq__list { grid-column: 2; grid-row: 1; } }
+
+.faq__item { border-bottom: 1px solid var(--line); }
+.faq__q {
+  display: flex; justify-content: space-between; align-items: center; gap: var(--s5);
+  padding: var(--s5) 0; cursor: pointer; list-style: none;
+  font-family: var(--serif); font-size: var(--fs-h3); line-height: 1.2; color: var(--ink);
+  transition: color .2s ease;
+}
+.faq__q::-webkit-details-marker { display: none; }
+.faq__q:hover { color: var(--brand); }
+.faq__item[open] .faq__q { color: var(--brand); }
+.faq__q .pm-icon { width: 24px; height: 24px; flex: none; color: var(--brand); }
+.faq__a { padding: 0 0 var(--s6); max-width: 50ch; font-size: var(--fs-body); }
+.faq__a p { margin: 0; }
+.faq__a a { display: inline-block; font-size: var(--fs-sm); font-weight: 700; text-underline-offset: 5px; }

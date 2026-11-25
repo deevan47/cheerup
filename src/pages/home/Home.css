@@ -1,0 +1,295 @@
+/* HOME PAGE styles. Sections in order: hero, showcase, who's it for, the deal,
+   the gifts, how it works, the person, closing panel. */
+
+/* ===== Hero (copy left, the animated logo right) ===== */
+.hero {
+  max-width: var(--max); margin: 0 auto; padding: var(--s7) var(--gutter) var(--s7);
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+  gap: var(--s6) var(--s8); align-items: center;
+}
+.hero__copy { min-width: 0; }
+/* the only use of --fs-hero on the site */
+.hero__title {
+  margin: 0; font-family: var(--serif); font-weight: 400; font-size: var(--fs-hero);
+  line-height: 1; letter-spacing: -.018em; max-width: 13ch; text-wrap: balance;
+}
+.hero__lead { margin: var(--s6) 0 0; max-width: 34ch; font-size: var(--fs-lead); line-height: var(--lh-lead); text-wrap: pretty; }
+.hero__lead b { font-weight: 700; }   /* colour comes off: the marker stroke carries it now */
+.hero__cta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3) var(--s4); margin-top: var(--s6); }
+.hero__trust {
+  display: flex; flex-wrap: wrap; gap: var(--s3) var(--s5); margin: var(--s6) 0 0; padding: 0;
+  list-style: none; font-size: var(--fs-sm); font-weight: 700;
+}
+.hero__trust li { display: flex; align-items: center; gap: var(--s2); }
+.hero__trust svg { width: 20px; height: auto; color: var(--brand); flex: none; }
+/* the logo: unchanged from the original site (the draw-in animation lives in lib/motion.js) */
+.hero__art { display: flex; justify-content: center; padding: var(--s5) 0; }
+.hero__logo { width: min(100%, 520px); height: auto; color: var(--brand); overflow: visible; }
+
+/* ===== Showcase: four named, priced products straight after the hero =====
+   Only renders once four products have photos (see Showcase.jsx). */
+.showcase {
+  max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter) var(--section-y);
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s3);
+}
+.shot { display: block; min-width: 0; text-decoration: none; color: var(--ink); }
+.shot .slot { transition: opacity .25s ease; }
+.shot:hover .slot { opacity: .88; }
+.shot__name {
+  display: block; margin-top: var(--s3); font-family: var(--serif);
+  font-size: var(--fs-body); line-height: 1.2; transition: color .2s ease;
+}
+.shot:hover .shot__name { color: var(--brand); }
+.shot__price { display: block; margin-top: 2px; font-size: var(--fs-sm); font-weight: 700; color: var(--dark); }
+@media (max-width: 900px) {
+  .showcase { gap: var(--s2); }
+  /* a short strip on phones: it should cost a glance, not half a screen */
+  .shot .slot { --ratio: auto; height: 104px; }
+  .shot__name { margin-top: var(--s2); font-size: var(--fs-sm); }
+  .shot__price { font-size: var(--fs-xs); }
+}
+
+/* ===== Who's it for ===== */
+.lucky__inner { max-width: var(--max); margin: 0 auto; padding: var(--section-y) var(--gutter); }
+.lucky__head { max-width: 46ch; }
+.lucky__body { margin-top: var(--s6); }
+/* Desktop: the people sit beside the heading instead of leaving the right half of
+   the section empty. */
+@media (min-width: 1100px) {
+  .lucky__inner { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--s7); align-items: start; }
+  .lucky__body { margin-top: 0; }
+}
+.who { display: flex; flex-wrap: wrap; gap: var(--s1) var(--s5); border-bottom: 1px solid var(--rule); padding-bottom: var(--s3); }
+.who__item {
+  background: none; border: 0; border-bottom: 2px solid transparent; padding: var(--s3) 0; min-height: 44px;
+  cursor: pointer; font-size: var(--fs-body); font-weight: 700; color: var(--muted);
+  transition: color .2s ease, border-color .2s ease;
+}
+.who__item:hover { color: var(--ink); }
+.who__item[aria-selected='true'] { color: var(--brand); border-bottom-color: var(--brand); }
+#who-panel:focus { outline: none; }
+
+.lucky__ideas { display: flex; flex-direction: column; }
+.idea {
+  display: grid; grid-template-columns: 72px minmax(0, 1fr) auto; gap: var(--s3) var(--s5);
+  align-items: center; padding: var(--s5) 0; border-bottom: 1px solid var(--rule);
+}
+.idea:not(:has(.idea__thumb)) { grid-template-columns: minmax(0, 1fr) auto; }
+.idea__thumb { width: 72px; height: 90px; object-fit: cover; }
+.idea__main { min-width: 0; }
+.idea__cat { margin: 0; }
+.idea__line { margin: var(--s2) 0 0; font-family: var(--serif); font-size: var(--fs-h3); line-height: 1.18; text-wrap: balance; }
+.idea__actions { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s2); }
+.idea__more { font-size: var(--fs-sm); }
+.lucky__help {
+  background: var(--brand); color: var(--cream); border-radius: var(--r); padding: var(--s6);
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--s5) var(--s6);
+}
+.lucky__help p { margin: 0; font-family: var(--serif); font-size: var(--fs-h3); line-height: 1.2; max-width: 22ch; }
+@media (max-width: 700px) {
+  .idea { grid-template-columns: 56px minmax(0, 1fr); }
+  .idea__thumb { width: 56px; height: 70px; }
+  .idea__actions { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; align-items: center; gap: var(--s2) var(--s4); }
+}
+
+/* ===== The deal ===== */
+.ledger { background: var(--brand); color: var(--cream); }
+.ledger__inner { max-width: var(--max); margin: 0 auto; padding: var(--section-y) var(--gutter); }
+.ledger__row {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: var(--s3) var(--s8);
+  align-items: center; padding: var(--s5) 0; border-top: 1px solid rgba(250, 245, 239, .35);
+}
+.ledger__row:last-child { border-bottom: 1px solid rgba(250, 245, 239, .35); }
+.ledger__num { display: flex; align-items: baseline; min-width: 0; font-family: var(--sans); line-height: 1; letter-spacing: -.04em; }
+.ledger__num b { font-size: clamp(40px, 4.2vw + 18px, 80px); font-weight: 700; }
+.ledger__num small { font-size: clamp(22px, 2.2vw + 10px, 40px); font-weight: 700; margin-left: .05em; color: var(--sand); }
+.ledger__txt { min-width: 0; }
+.ledger__txt h3 { margin: 0 0 var(--s2); font-family: var(--serif); font-weight: 400; font-size: var(--fs-h3); line-height: 1.15; text-wrap: balance; }
+/* --cream, not --sand: sand on this orange is 4.47:1, just under the 4.5:1 minimum */
+.ledger__txt p { margin: 0; font-size: var(--fs-body); max-width: 44ch; color: var(--cream); }
+@media (max-width: 700px) { .ledger__row { grid-template-columns: 1fr; } }
+/* the safety net: three small promises under the big three */
+.net { margin-top: var(--s7); }
+.net__head { margin: 0 0 var(--s4); font-family: var(--serif); font-weight: 400; font-size: var(--fs-h3); line-height: 1.15; }
+.net__list {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: var(--s4) var(--s6);
+}
+.net__list li { font-size: var(--fs-sm); line-height: 1.5; padding-left: var(--s4); border-left: 2px solid rgba(250, 245, 239, .45); }
+.net__list b { display: block; margin-bottom: 2px; font-size: var(--fs-body); }
+.net__link { display: inline-block; margin-top: var(--s1); color: var(--cream); font-weight: 700; text-underline-offset: 4px; }
+.net__link:hover { color: var(--sand); }
+
+/* ===== The gifts: a sideways shelf of all thirteen ===== */
+.ways { max-width: var(--max); margin: 0 auto; padding: var(--section-y) var(--gutter); }
+.ways__head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: var(--s5) var(--s6); margin-bottom: var(--s6); }
+.ways__head > div:first-child { flex: 1; min-width: min(100%, 360px); }
+.ways__head h2 { max-width: 16ch; }
+.ways__nav { display: flex; align-items: center; gap: var(--s2); }
+.ways__all { font-size: var(--fs-body); margin-left: var(--s3); }
+
+/* the two arrows: round, outlined, and quiet when there is nowhere to go */
+.ways__arrow {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+  background: transparent; color: var(--ink); border: 1.5px solid var(--ink);
+  transition: background-color .2s ease, color .2s ease, opacity .2s ease;
+}
+.ways__arrow svg { width: 20px; height: 20px; }
+.ways__arrow:hover:not(:disabled) { background: var(--ink); color: var(--cream); }
+.ways__arrow:disabled { opacity: .3; cursor: default; }
+/* on a phone you swipe, so the arrows step aside */
+@media (max-width: 700px) { .ways__arrow { display: none; } .ways__all { margin-left: 0; } }
+
+/* The shelf runs to the edge of the screen on the right, past the page margin,
+   so the next tile is visibly cut off: that half-tile is what says "scroll". */
+.shelf {
+  list-style: none; margin: 0 calc(var(--gutter) * -1); padding: 0 var(--gutter) var(--s3);
+  display: grid; grid-auto-flow: column; grid-auto-columns: clamp(156px, 22vw, 232px); gap: var(--s4);
+  overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 var(--gutter);
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.shelf::-webkit-scrollbar { display: none; }
+.shelf__item { scroll-snap-align: start; min-width: 0; }
+.tile { display: block; text-decoration: none; color: var(--ink); }
+.tile .slot { transition: transform .35s var(--ease), background-color .3s ease; }
+.tile:hover .slot { transform: translateY(-4px); }
+/* a note card turns over to the brand colour under the pointer */
+.tile:hover .slot--empty, .tile:focus-visible .slot--empty { background: var(--brand); }
+.tile:hover .slot__line, .tile:hover .slot__no,
+.tile:focus-visible .slot__line, .tile:focus-visible .slot__no { color: var(--cream); }
+.tile__name { display: block; margin-top: var(--s3); font-family: var(--serif); font-size: var(--fs-body); line-height: 1.2; transition: color .2s ease; }
+.tile:hover .tile__name { color: var(--brand); }
+.tile__price { display: block; margin-top: 2px; font-size: var(--fs-sm); color: var(--muted); }
+
+.ways__more { margin: var(--s7) 0 0; font-family: var(--serif); font-size: var(--fs-h3); line-height: 1.25; }
+.ways__more .tlink { font-family: var(--sans); font-size: var(--fs-body); margin-left: var(--s1); white-space: nowrap; }
+
+/* ===== How it works: the steps beside an example chat ===== */
+.process { background: var(--sand); }
+.process__inner {
+  max-width: var(--max); margin: 0 auto; padding: var(--section-y) var(--gutter);
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+  gap: var(--s7) var(--s8); align-items: center;
+}
+.process__text { min-width: 0; }
+.process__text h2 { max-width: 14ch; }
+.process__link { display: inline-block; margin-top: var(--s5); font-size: var(--fs-body); color: var(--dark); text-decoration-color: rgba(110, 43, 16, .3); }
+.process__link:hover { text-decoration-color: var(--dark); color: var(--ink); }
+
+/* Steps light up as the chat reaches them. Unlit is .72 ink over sand, about 5.5:1. */
+.steps3 { margin: var(--s6) 0 0; padding: 0; list-style: none; }
+.step3 {
+  display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: var(--s3);
+  padding: var(--s4) 0; border-top: 1.5px solid var(--rule);
+  opacity: .72; transition: opacity .4s ease, border-color .4s ease;
+}
+.step3.is-on, .step3.is-past { opacity: 1; }
+.step3.is-on { border-top-color: var(--ink); }
+/* --dark, not --brand: brand on sand is 4.47:1 and this is small text */
+.step3__no { font-size: var(--fs-sm); font-weight: 700; letter-spacing: .08em; color: var(--dark); padding-top: 4px; }
+.step3 h3 { margin: 0 0 var(--s1); font-family: var(--serif); font-weight: 400; font-size: var(--fs-h3); line-height: 1.15; text-wrap: balance; }
+.step3 p { margin: 0; font-size: var(--fs-body); }
+
+/* the example chat */
+.chat { margin: 0; min-width: 0; }
+.chat__phone {
+  max-width: 400px; margin: 0 auto; border-radius: 22px; overflow: hidden;
+  background: var(--cream); box-shadow: 0 0 0 1px var(--rule), 0 24px 48px -28px rgba(63, 24, 9, .45);
+}
+.chat__top {
+  display: flex; align-items: center; gap: var(--s3); padding: var(--s3) var(--s4);
+  background: var(--ink); color: var(--cream); font-size: var(--fs-sm); line-height: 1.25;
+}
+.chat__top small { display: block; font-size: var(--fs-xs); color: var(--sand); }
+.chat__avatar {
+  display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%;
+  background: var(--brand); color: var(--cream); flex: none;
+}
+.chat__avatar svg { width: 20px; height: auto; }
+/* fixed height, newest at the bottom: older messages slide up and out, as in a real chat */
+.chat__log {
+  list-style: none; margin: 0; padding: var(--s4);
+  height: 480px; display: flex; flex-direction: column; justify-content: flex-end; gap: var(--s2);
+  overflow: hidden; -webkit-mask-image: linear-gradient(transparent, #000 64px); mask-image: linear-gradient(transparent, #000 64px);
+}
+.bubble {
+  max-width: 82%; padding: 10px 14px; border-radius: 16px; font-size: var(--fs-sm); line-height: 1.4;
+  animation: bubble-in .35s var(--ease) both; flex: none;
+}
+.bubble--you { align-self: flex-end; background: var(--brand); color: var(--cream); border-bottom-right-radius: 4px; }
+.bubble--me { align-self: flex-start; background: var(--sand); color: var(--ink); border-bottom-left-radius: 4px; }
+@keyframes bubble-in { from { opacity: 0; transform: translateY(10px) scale(.97); } }
+.bubble__preview {
+  display: block; margin: 2px 0 var(--s2); padding: var(--s5) var(--s3) var(--s3); border-radius: 10px;
+  background: var(--cream); box-shadow: inset 0 0 0 1px var(--rule);
+  font-family: var(--serif); font-size: 20px; line-height: 1.15; text-align: center;
+}
+.bubble__preview span {
+  display: block; margin-bottom: var(--s2); font-family: var(--sans); font-size: 12px; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--dark);
+}
+.bubble--typing { display: flex; gap: 5px; padding: 14px 16px; }
+.bubble--typing i { width: 7px; height: 7px; border-radius: 50%; background: var(--dark); animation: dot 1s infinite ease-in-out; }
+.bubble--typing i:nth-child(2) { animation-delay: .15s; }
+.bubble--typing i:nth-child(3) { animation-delay: .3s; }
+@keyframes dot { 0%, 60%, 100% { opacity: .3; transform: none; } 30% { opacity: 1; transform: translateY(-3px); } }
+.chat__cap {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--s1) var(--s3);
+  margin-top: var(--s4); font-size: var(--fs-sm); color: var(--dark); text-align: center;
+}
+.chat__again {
+  background: none; border: 0; padding: var(--s2) 0; min-height: 44px; cursor: pointer;
+  font-weight: 700; color: var(--ink); text-decoration: underline; text-underline-offset: 5px;
+}
+@media (max-width: 700px) { .chat__log { height: 420px; } }
+
+/* ===== The person ===== */
+.founder {
+  max-width: var(--max); margin: 0 auto; padding: var(--section-y) var(--gutter) 0;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+  gap: var(--s7) var(--s8); align-items: center;
+}
+.founder__text { max-width: 760px; min-width: 0; }
+.founder__big { margin: 0; font-family: var(--serif); font-size: var(--fs-h2); line-height: var(--lh-head); max-width: 15ch; text-wrap: balance; }
+.founder__sub { margin: var(--s5) 0 0; font-size: var(--fs-lead); line-height: var(--lh-lead); max-width: 34ch; }
+.founder__name { margin: var(--s4) 0 0; font-size: var(--fs-sm); font-weight: 700; color: var(--dark); }
+.founder__link { font-size: var(--fs-body); margin-top: var(--s3); }
+
+/* the gift tag: a card with a punched hole and a clipped corner, tilted a little
+   until you point at it */
+.tag {
+  position: relative; justify-self: center; width: min(100%, 420px);
+  padding: var(--s7) var(--s6) var(--s6); background: var(--sand); color: var(--ink);
+  clip-path: polygon(0 0, calc(100% - 40px) 0, 100% 40px, 100% 100%, 0 100%);
+  border-radius: var(--r); transform: rotate(-2deg); transition: transform .5s var(--ease);
+}
+.tag:hover { transform: rotate(0deg) translateY(-4px); }
+.tag__hole {
+  position: absolute; top: var(--s5); right: 52px; width: 14px; height: 14px; border-radius: 50%;
+  background: var(--cream); box-shadow: inset 0 0 0 2px var(--rule);
+}
+.tag__to { margin: 0; font-size: var(--fs-xs); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--dark); }
+.tag__msg { margin: var(--s3) 0 0; font-family: var(--serif); font-size: var(--fs-h3); line-height: 1.2; text-wrap: balance; }
+.tag__sign { margin: var(--s4) 0 0; font-family: var(--serif); font-size: var(--fs-lead); color: var(--brand); }
+.tag__sign::before { content: '— '; }
+.tag__ways { margin: var(--s5) 0 0; padding-top: var(--s4); border-top: 1px dashed rgba(63, 24, 9, .35); display: grid; gap: var(--s2); }
+.tag__ways div { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: var(--s3); align-items: baseline; }
+.tag__ways dt { font-size: var(--fs-xs); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--dark); }
+.tag__ways dd { margin: 0; font-size: var(--fs-sm); font-weight: 700; overflow-wrap: break-word; }
+.tag__ways a { color: var(--ink); text-underline-offset: 4px; }
+.tag__ways a:hover { color: var(--dark); }
+@media (max-width: 480px) {
+  .tag { padding: var(--s6) var(--s5) var(--s5); }
+  .tag__ways div { grid-template-columns: 1fr; gap: 0; }   /* the email fits whole on its own line */
+}
+@media (prefers-reduced-motion: reduce) { .tag { transform: none; } }
+
+/* ===== Closing panel ===== */
+.final { max-width: var(--max); margin: 0 auto; padding: var(--section-y) var(--gutter); }
+.final__box {
+  background: var(--ink); color: var(--cream); border-radius: var(--r); padding: var(--s7);
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: var(--s5) var(--s8); align-items: end;
+}
+.final__box h2 { margin: 0; }
+.final__box p { margin: 0 0 var(--s5); font-size: var(--fs-lead); line-height: var(--lh-lead); color: var(--sand); max-width: 30ch; }

@@ -1,0 +1,28 @@
+/* The space a product photo sits in. See ImageSlot.jsx. */
+.slot {
+  position: relative; overflow: hidden; width: 100%; aspect-ratio: var(--ratio, 4 / 5);
+  border-radius: var(--r); background: var(--sand);
+}
+/* Empty: the sand panel plus a hairline just inside the edge, so it reads as a
+   frame waiting for its picture rather than a coloured block. */
+.slot--empty { box-shadow: inset 0 0 0 1px var(--rule); }
+
+/* With a photo: fill the space edge to edge, cropping rather than letterboxing. */
+.slot picture { display: block; width: 100%; height: 100%; }
+.slot .photo-img {
+  width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover;
+  box-shadow: none; border-radius: 0;
+}
+
+/* The note an empty space carries until its photo arrives (see ImageSlot.jsx). */
+.slot__note {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  justify-content: space-between; padding: var(--s4);
+  transition: color .3s ease;
+}
+.slot { transition: background-color .3s ease; }
+.slot__no { font-size: var(--fs-xs); font-weight: 700; letter-spacing: .12em; color: var(--dark); transition: color .3s ease; }
+.slot__line {
+  margin: 0; font-family: var(--serif); font-size: clamp(17px, 0.5vw + 15px, 20px);
+  line-height: 1.22; color: var(--ink); text-wrap: balance; transition: color .3s ease;
+}

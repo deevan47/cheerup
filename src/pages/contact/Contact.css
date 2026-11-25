@@ -1,0 +1,32 @@
+.contact { max-width: var(--max); margin: 0 auto; padding: var(--s5) var(--gutter) var(--s10); }
+.contact__head .h-page { max-width: 20ch; }
+.contact__head .lead { max-width: 42ch; }
+.contact__grid {
+  margin-top: var(--s6); display: grid; grid-template-columns: 1fr; gap: var(--s7);
+  align-items: start;
+}
+@media (min-width: 900px) { .contact__grid { grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: var(--s8); } }
+.contact__main { min-width: 0; }
+
+/* One line at every width. At 1440 the 120px version broke into "834 163" and
+   "7447", which is hard to read and harder to copy by eye. */
+.contact__number {
+  display: inline-block; font-family: var(--sans); font-weight: 700;
+  font-size: clamp(32px, 5vw + 6px, 76px); line-height: 1.05; letter-spacing: -.01em;
+  white-space: nowrap; color: var(--brand); text-decoration: none; transition: color .2s ease;
+}
+.contact__number:hover { color: var(--dark); }
+.contact__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s4) var(--s5); margin-top: var(--s6); }
+.contact__copy {
+  background: none; border: 0; padding: 10px 0; min-height: 44px; cursor: pointer;
+  font-size: var(--fs-body); font-weight: 700; color: var(--brand);
+  text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 8px;
+  text-decoration-color: rgba(168, 70, 30, .3); transition: text-decoration-color .2s ease;
+}
+.contact__copy:hover { text-decoration-color: var(--brand); }
+
+.contact__side { display: flex; flex-direction: column; gap: var(--s6); border-top: 1px solid var(--line); padding-top: var(--s6); min-width: 0; }
+.contact__side .eyebrow { margin-bottom: var(--s1); }
+.contact__side p { margin: 0; font-size: var(--fs-body); }
+.contact__side a { text-underline-offset: 5px; overflow-wrap: anywhere; }
+.contact__email { font-size: var(--fs-body); font-weight: 700; }

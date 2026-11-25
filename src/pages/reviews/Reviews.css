@@ -1,0 +1,15 @@
+.reviews-hero { max-width: var(--max); margin: 0 auto; padding: var(--s7) var(--gutter) 0; }
+.reviews-hero__ask { margin: var(--s6) 0 0; }
+
+.reviews-list {
+  max-width: var(--max); margin: 0 auto; padding: var(--section-y) var(--gutter);
+  display: flex; flex-direction: column; gap: var(--s7);
+}
+.review { margin: 0; max-width: 46ch; }
+.review blockquote { margin: 0; font-family: var(--serif); font-size: var(--fs-h3); line-height: 1.25; text-wrap: pretty; }
+.review figcaption { margin-top: var(--s4); font-size: var(--fs-sm); font-weight: 700; }
+
+.delivered { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter) var(--s10); }
+.delivered__head { margin-bottom: var(--s6); padding-top: var(--s7); border-top: 1px solid var(--line); }
+.delivered__masonry { columns: 3 260px; column-gap: var(--s4); }
+.delivered__masonry > * { break-inside: avoid; margin-bottom: var(--s4); display: block; }

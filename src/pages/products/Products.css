@@ -1,0 +1,92 @@
+/* THE GIFTS PAGE. See Products.jsx for the order of things. */
+.products { max-width: var(--max); margin: 0 auto; padding: var(--s5) var(--gutter) var(--s10); }
+.products__head .h-page { max-width: 22ch; }
+.products__head .lead { max-width: 60ch; }
+
+/* ---------- the sticky jump row ----------
+   Sits under the header, scrolls sideways when the thirteen chips do not fit,
+   and hides its scrollbar: the chips running off the edge already say "more". */
+.cat-jump {
+  position: sticky; top: var(--hdr); z-index: 20;
+  display: flex; gap: var(--s2); overflow-x: auto; scroll-snap-type: x proximity;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  margin: var(--s5) calc(var(--gutter) * -1) 0; padding: var(--s3) var(--gutter);
+  background: var(--cream); border-bottom: 1px solid var(--line);
+}
+.cat-jump::-webkit-scrollbar { display: none; }
+.cat-jump .chip { flex: 0 0 auto; scroll-snap-align: center; text-decoration: none; white-space: nowrap; }
+@media (max-width: 1099px) { .cat-jump { top: 64px; } }
+
+/* ---------- the grid of cards ----------
+   Three across on desktop, two on a tablet, one on a phone. auto-fill rather
+   than auto-fit, so a short last row keeps its card width instead of
+   stretching one card across the page. */
+.gifts {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: var(--s8) var(--s6); margin-top: var(--s7);
+}
+
+/* ---------- one card ---------- */
+.gift { display: flex; flex-direction: column; min-width: 0; scroll-margin-top: calc(var(--hdr) + 80px); }
+.gift .slot { transition: transform .4s var(--ease); }
+.gift:hover .slot { transform: translateY(-4px); }
+.gift__body { display: flex; flex-direction: column; flex: 1; padding-top: var(--s5); }
+.gift__name { margin: 0; font-family: var(--serif); font-weight: 400; font-size: var(--fs-h3); line-height: 1.15; }
+.gift__line { margin: var(--s2) 0 0; font-size: var(--fs-body); line-height: var(--lh-lead); }
+
+/* the chooser: chips or the slider */
+.gift__opts { border: 0; margin: var(--s5) 0 0; padding: 0; min-width: 0; }
+.gift__legend {
+  display: block; padding: 0; margin: 0 0 var(--s2);
+  font-size: var(--fs-xs); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--dark);
+}
+.gift__chips { display: flex; flex-wrap: wrap; gap: var(--s2); }
+.gift__chips .chip:focus-within { outline: 3px solid var(--ink); outline-offset: 3px; }
+
+/* the detail fades in fresh each time the option changes (it is re-keyed) */
+.gift__detail { margin-top: var(--s4); animation: gift-in .35s var(--ease) both; flex: 1; display: flex; flex-direction: column; }
+@keyframes gift-in { from { opacity: 0; transform: translateY(4px); } }
+.gift__desc { margin: 0; font-size: var(--fs-body); line-height: var(--lh-lead); color: var(--muted); flex: 1; }
+.gift__price { margin: var(--s3) 0 0; font-size: 20px; font-weight: 700; line-height: 1.2; color: var(--ink); }
+.gift__ask { font-size: var(--fs-sm); color: var(--muted); }
+
+.gift__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3) var(--s5); margin-top: var(--s4); }
+.gift__q { font-size: var(--fs-sm); text-underline-offset: 6px; }
+
+/* ---------- the frame-size slider ---------- */
+.gift__size { margin-top: var(--s5); }
+.gift__size-head { display: flex; justify-content: space-between; align-items: baseline; }
+.gift__size-head .gift__legend { margin: 0; }
+.gift__size-val { font-size: var(--fs-h3); font-family: var(--serif); line-height: 1; color: var(--ink); }
+.gift__ticks { display: flex; justify-content: space-between; margin-top: var(--s1); font-size: var(--fs-xs); color: var(--muted); }
+
+/* ---------- the closing panel ---------- */
+.products__foot { padding-top: var(--section-y); }
+.products__help {
+  background: var(--sand); border-radius: var(--r); padding: var(--s6);
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--s5) var(--s6);
+}
+.products__help p { margin: 0; font-family: var(--serif); font-size: var(--fs-h3); line-height: 1.15; max-width: 24ch; }
+.products__new { margin: var(--s6) 0 0; font-size: var(--fs-body); }
+.products__new .tlink { margin-left: var(--s1); }
+
+/* ---------- the empty image space, until a photo arrives ----------
+   The chosen shape or the frame size, drawn. Changing the choice redraws it. */
+.gift .slot__note { padding: var(--s5); }
+.gift__slot-name { font-size: var(--fs-h3); animation: gift-in .35s var(--ease) both; }
+.shape-viz {
+  align-self: center; width: 46%; height: auto; overflow: visible;
+  animation: shape-in .45s var(--ease) both;
+}
+.shape-viz path { fill: var(--cream); stroke: var(--brand); stroke-width: 2.5; stroke-linejoin: round; }
+@keyframes shape-in { from { opacity: 0; transform: scale(.86); } }
+
+.frame-viz { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 0; }
+.frame-viz__frame {
+  /* 4 in is about a fifth of the space across, 32 in about two-thirds */
+  width: calc(18% + var(--k) * 50%); aspect-ratio: 4 / 5;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--cream); border: 3px solid var(--ink); box-shadow: inset 0 0 0 6px var(--sand);
+  transition: width .45s var(--ease);
+}
+.frame-viz__frame span { font-family: var(--serif); font-size: var(--fs-sm); color: var(--ink); }

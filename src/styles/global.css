@@ -1,0 +1,90 @@
+/* Brand colours, the type scale and the spacing scale. Change a token here and it
+   changes everywhere; that is the point. Nothing below should hard-code a px font
+   size or a one-off colour.
+
+   Breakpoints used across the site, so every file agrees:
+     phone    <= 700px
+     tablet   701px - 1099px
+     desktop  >= 1100px   (header nav appears, sticky WhatsApp bar disappears)
+   The 1100px line is also NARROW_BREAKPOINT in hooks/useNarrow.js. */
+:root {
+  /* ---- Brand colours: LOCKED. Do not change these values. ----
+     Where one of them failed contrast, what it sits ON changed, never the colour. */
+  --brand: #A8461E;    /* burnt orange: buttons, accents */
+  --ink: #3F1809;      /* body text, dark backgrounds, focus ring */
+  --cream: #FAF5EF;    /* page background */
+  --sand: #F3DCCC;     /* soft panels */
+  --dark: #6E2B10;     /* eyebrows and small text on cream or sand (7.90:1 on sand) */
+  --muted: #6b4a3a;    /* secondary text and field borders (7.27:1 on cream) */
+  --accent: #DE8A57;   /* decorative only: never text, never the focus ring */
+  --line: #E6D6C7;     /* decorative dividers only: never a field border (1.31:1) */
+  --rule: rgba(63, 24, 9, .18);   /* hairlines on cream */
+
+  /* ---- Brand fonts: LOCKED ---- */
+  --serif: 'CU Numerals', 'Young Serif', 'Young Serif Fallback', Georgia, serif;   /* CU Numerals = clean digits, 'Young Serif Fallback' = metric-matched Georgia, see fonts.css */
+  --sans: Figtree, 'Noto Sans Devanagari', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* ---- Type scale. Eight steps, and nothing in between. ----
+     Fluid between a 360px phone and a 1440px desktop. */
+  --fs-xs: 14px;                                  /* legal lines, captions, eyebrows */
+  --fs-sm: 16px;                                  /* meta, small links, nav */
+  --fs-body: 18px;                                /* all body copy */
+  --fs-lead: clamp(19px, 0.4vw + 17.5px, 21px);   /* intro paragraphs */
+  --fs-h3: clamp(22px, 0.8vw + 19px, 28px);
+  --fs-h2: clamp(32px, 2.2vw + 24px, 52px);
+  --fs-h1: clamp(38px, 3vw + 27px, 68px);         /* every inner-page H1 */
+  --fs-hero: clamp(42px, 4.2vw + 26px, 84px);     /* the Home hero H1, and nothing else */
+  --lh-body: 1.6;
+  --lh-lead: 1.5;
+  --lh-head: 1.06;
+
+  /* ---- Spacing scale, 4px base. Every gap and padding rounds to one of these. ---- */
+  --s1: 4px;  --s2: 8px;   --s3: 12px;  --s4: 16px;  --s5: 24px;
+  --s6: 32px; --s7: 48px;  --s8: 64px;  --s9: 96px;  --s10: 128px;
+  --section-y: clamp(64px, 7vw, 96px);
+  --gutter: clamp(20px, 4vw, 40px);
+  --max: 1200px;
+  --r: 4px;        /* one radius: buttons, chips, cards, boxes, badges, inputs */
+  --hdr: 72px;     /* header height on desktop; 64px on phones, see Header.css */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+
+html, body { overflow-x: clip; }
+/* Enough room for the sticky header and, on the Gifts page, the chip row under it,
+   so a link to #mugs does not land with the heading hidden behind them. */
+html { scroll-padding-top: calc(var(--hdr) + 72px); }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }   /* phones must not re-scale our sizes */
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font: 400 var(--fs-body)/var(--lh-body) var(--sans);
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+*, *::before, *::after { box-sizing: border-box; }
+svg { display: block; }
+/* :where() keeps these at zero specificity so any class overrides them */
+:where(a) { color: var(--brand); }
+:where(a):hover { color: var(--dark); }
+::selection { background: var(--sand); color: var(--ink); }
+input, textarea, button { font: inherit; color: inherit; }
+
+/* ---- Focus. One rule for the whole site. ----
+   The old ring was --accent, which is 2.46:1 on cream and 2.21:1 on the orange
+   sections: a keyboard user simply lost their place. --ink is 14.39:1 on cream and
+   11.83:1 on sand; on dark panels the ring flips to cream. */
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.on-dark :focus-visible,
+.site-footer :focus-visible,
+.req-bar :focus-visible,
+.ledger :focus-visible,
+.final__box :focus-visible,
+.how-cta__box :focus-visible { outline-color: var(--cream); }
+
+main { min-height: 70vh; transition: opacity .34s ease, transform .42s var(--ease); }
+main:focus { outline: none; }   /* it only gets focus from the skip link */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}

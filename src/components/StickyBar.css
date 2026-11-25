@@ -1,0 +1,11 @@
+.sticky-bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 28;
+  padding: 9px var(--s4) calc(9px + env(safe-area-inset-bottom, 0px));
+  background: var(--cream); border-top: 1px solid var(--line);
+  transform: translateY(110%); transition: transform .35s var(--ease);
+}
+.sticky-bar.is-up { transform: none; }
+.sticky-bar .btn { display: flex; width: 100%; min-height: 52px; padding: 14px; font-size: 17px; }
+
+/* Desktop has the header button instead. */
+@media (min-width: 1100px) { .sticky-bar { display: none; } }

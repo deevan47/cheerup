@@ -1,0 +1,181 @@
+/* Shared building blocks used by many pages. If two pages need the same thing,
+   it belongs here, not twice. */
+
+/* ---------- layout ---------- */
+.wrap { max-width: var(--max); margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
+
+/* Skip link: the first thing a keyboard reaches, so nobody has to tab the logo,
+   six nav links and a button on every page before getting to the content. */
+.skip {
+  position: absolute; left: var(--s4); top: -60px; z-index: 100;
+  background: var(--ink); color: var(--cream); padding: var(--s3) var(--s4);
+  border-radius: var(--r); font-weight: 700; text-decoration: none;
+}
+.skip:focus { top: var(--s3); color: var(--cream); }
+
+/* ---------- type ---------- */
+.serif { font-family: var(--serif); font-weight: 400; }
+.accent { color: var(--brand); }
+/* One H1 for every inner page. The Home hero is the only exception (--fs-hero). */
+.h-page {
+  margin: 0; font-family: var(--serif); font-weight: 400; font-size: var(--fs-h1);
+  line-height: 1.04; letter-spacing: -.015em; max-width: 16ch; text-wrap: balance;
+}
+.h-section {
+  margin: 0; font-family: var(--serif); font-weight: 400; font-size: var(--fs-h2);
+  line-height: var(--lh-head); letter-spacing: -.012em; text-wrap: balance;
+}
+.lead { margin: var(--s5) 0 0; font-size: var(--fs-lead); line-height: var(--lh-lead); text-wrap: pretty; }
+
+/* Section label. One style everywhere: no numbers, no trailing rule, no variants.
+   --dark, not --brand, because --brand is only 4.47:1 on the sand panels. */
+.eyebrow {
+  margin: 0 0 var(--s4); font-size: var(--fs-xs); font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--dark);
+}
+.on-dark .eyebrow { color: var(--cream); }
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: var(--s4) 28px; border: 0; border-radius: var(--r);
+  font: 700 17px/1 var(--sans); text-decoration: none; cursor: pointer;
+  transition: background-color .2s ease, color .2s ease, box-shadow .2s ease;
+}
+.btn svg { width: 20px; height: 20px; flex: 0 0 auto; }
+.btn--sm { min-height: 44px; padding: var(--s3) 18px; font-size: var(--fs-sm); }
+.btn--primary { background: var(--brand); color: var(--cream); }            /* 5.44:1 */
+.btn--primary:hover { background: var(--ink); color: var(--cream); }        /* 14.39:1 */
+.btn--primary:active { background: var(--dark); }
+.btn--outline { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); }
+.btn--outline:hover { background: var(--ink); color: var(--cream); }
+.btn--light { background: var(--cream); color: var(--ink); }                /* on orange or ink panels */
+.btn--light:hover { background: var(--sand); color: var(--ink); }
+.btn[disabled], .btn[aria-disabled='true'] { background: var(--line); color: var(--muted); cursor: not-allowed; }
+
+/* ---------- underlined text links ---------- */
+.tlink {
+  font-weight: 700; color: var(--brand); text-decoration: underline; text-decoration-thickness: 2px;
+  text-underline-offset: 8px; text-decoration-color: rgba(168, 70, 30, .3); transition: text-decoration-color .2s ease;
+}
+.tlink:hover { text-decoration-color: var(--brand); color: var(--dark); }
+/* Add to a text link that stands on its own line, to bring it up to a 44px target. */
+.tap { display: inline-block; padding: 10px 0; }
+
+/* ---------- form fields ----------
+   A full box, not an underline. The old 1px --line underline was 1.31:1 against
+   cream, so the fields were effectively invisible and the forms looked broken. */
+.field { display: flex; flex-direction: column; min-width: 0; }
+.field > label, .field label, .field legend, .field__label {
+  display: block; margin: 0 0 var(--s2); font: 700 var(--fs-sm)/1.4 var(--sans); color: var(--ink);
+}
+.field input, .field textarea, .field select {
+  width: 100%; background: transparent; color: var(--ink);
+  font: 400 var(--fs-body)/1.5 var(--sans);
+  border: 1.5px solid var(--muted); border-radius: var(--r); padding: 14px var(--s4);
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.field textarea { resize: vertical; }
+.field input::placeholder, .field textarea::placeholder { color: var(--muted); opacity: 1; }   /* 7.27:1 */
+.field input:focus, .field textarea:focus, .field select:focus {
+  outline: none;   /* replaced by a visible border change plus a 3px ring */
+  border-color: var(--ink); box-shadow: 0 0 0 3px var(--sand);
+}
+.field__hint { margin: var(--s2) 0 0; font-size: var(--fs-sm); color: var(--muted); }
+
+/* A chip built on a radio or a plain button: same look either way. */
+.chip {
+  display: inline-flex; align-items: center; min-height: 44px;
+  border: 1.5px solid var(--dark); background: transparent; color: var(--dark);
+  border-radius: var(--r); padding: 10px var(--s4);
+  font: 700 var(--fs-sm)/1 var(--sans); cursor: pointer;
+  transition: background-color .2s ease, color .2s ease;
+}
+.chip:hover { background: var(--sand); }
+.chip--on, .chip[aria-pressed='true'] { background: var(--brand); border-color: var(--brand); color: var(--cream); }
+.chip--on:hover, .chip[aria-pressed='true']:hover { background: var(--ink); border-color: var(--ink); color: var(--cream); }
+
+/* Visually hidden, still read out and still focusable. */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ---------- photos ---------- */
+img.photo-img {
+  display: block; width: 100%; height: auto; object-fit: cover;
+  border-radius: var(--r); box-shadow: 0 0 0 1px var(--rule); background: var(--sand);
+}
+
+/* A WhatsApp text link: the chat icon sits on the baseline with the words. */
+.wa-text { display: inline-flex; align-items: center; gap: var(--s2); }
+.wa-text svg { width: 18px; height: 18px; flex: 0 0 auto; }
+
+/* Deliberate exceptions to the 4px spacing scale, all of them component padding
+   rather than layout spacing:
+     .btn gap 10px, .btn padding 16/28, .btn--sm 12/18   the button spec
+     .field padding 14px 16px                            the field spec
+     .site-nav a padding 14px 0, .tap padding 10px 0     what makes a 44px target
+     .sticky-bar padding 9px                             keeps the bar under 72px
+   Add nothing else off-scale without a reason this concrete. */
+
+/* ---------- marker highlight ----------
+   For the one phrase on a page that decides whether someone keeps reading:
+   the price, the promise, the thing they were worried about.
+
+   It is a pen stroke behind the words, not a coloured box: the band stops short
+   of the ascenders and the corners are deliberately uneven, so it reads as
+   something drawn by hand rather than a UI element. It never changes the text
+   colour, so contrast is whatever it already was (ink on sand is 11.83:1).
+
+   Use it once per page. Two is a maybe. Three means none of them is important. */
+.hl {
+  background-image: linear-gradient(to bottom,
+    transparent 16%, var(--sand) 16%, var(--sand) 94%, transparent 94%);
+  padding: 0 .14em;
+  margin: 0 -.06em;
+  border-radius: 2px 7px 3px 8px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  font-weight: inherit;
+}
+/* On the sand panels the stroke flips to cream, or it would be invisible. */
+.process .hl, .why .hl, .request__side .hl, .products__help .hl, .step__tag .hl {
+  background-image: linear-gradient(to bottom,
+    transparent 16%, var(--cream) 16%, var(--cream) 94%, transparent 94%);
+}
+
+/* A chip with less side padding, for rows of options inside a card. Still 44px
+   tall, so it stays a comfortable touch target. */
+.chip--sm { padding: 10px 14px; }
+
+/* ---------- range slider ----------
+   Browsers draw sliders three different ways, so the track and thumb are
+   restyled for each. The filled part of the track is the --fill percentage the
+   component sets inline, painted in brand orange over a muted track. The whole
+   input is 44px tall even though the track is 4px, so it is easy to grab. */
+.range {
+  -webkit-appearance: none; appearance: none; display: block;
+  width: 100%; height: 44px; margin: 0; background: transparent; cursor: pointer;
+}
+.range::-webkit-slider-runnable-track {
+  height: 4px; border-radius: var(--r);
+  background: linear-gradient(to right, var(--brand) var(--fill, 0%), var(--muted) var(--fill, 0%));
+}
+.range::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 24px; height: 24px; margin-top: -10px; border-radius: 50%;
+  background: var(--brand); border: 3px solid var(--cream); box-shadow: 0 0 0 1.5px var(--brand);
+  transition: transform .15s ease;
+}
+.range:active::-webkit-slider-thumb { transform: scale(1.12); }
+.range::-moz-range-track { height: 4px; border-radius: var(--r); background: var(--muted); }
+.range::-moz-range-progress { height: 4px; border-radius: var(--r); background: var(--brand); }
+.range::-moz-range-thumb {
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--brand); border: 3px solid var(--cream); box-shadow: 0 0 0 1.5px var(--brand);
+}
+/* focus: the ring goes on the thumb, where the keyboard user is looking */
+.range:focus-visible { outline: none; }
+.range:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 1.5px var(--brand), 0 0 0 5px var(--ink); }
+.range:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 1.5px var(--brand), 0 0 0 5px var(--ink); }
