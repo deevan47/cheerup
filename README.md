@@ -234,7 +234,7 @@ Add a line here every time something changes.
 
 - **2026-11-18 (later: number, names and emphasis)** Four changes asked for after the audit pass.
 
-  **New WhatsApp number: +91 9505 9696 70** (was +91 834 163 7447). It lives in one place, `src/data/site.js`, and from there it reaches every `wa.me` link, the big number on Contact, the footer, the search listing and the Contact page's description. `public/og.jpg` was rebuilt with `npm run og` because the old number was drawn into it.
+  **New WhatsApp number: +91 9505 9696 70**, replacing the old one. It lives in one place, `src/data/site.js`, and from there it reaches every `wa.me` link, the big number on Contact, the footer, the search listing and the Contact page's description. `public/og.jpg` was rebuilt with `npm run og` because the old number was drawn into it.
 
   **The Home strip now names and prices its products** ("Big Snaps, ₹45 per print", "Colour inside mug, ₹329", and so on). It reads them live from `src/data/products.js`, so they cannot drift from the Gifts page. Unlabelled thumbnails were decoration; a name and a price are something a visitor can decide about. Edit the `PICKS` list in `src/pages/home/Showcase.jsx` to change which four appear.
 
